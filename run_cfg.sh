@@ -4,6 +4,11 @@ if [ "$1" = "clean" ]; then
     make clean
     find . -name *.o -exec rm -f {} \;
     exit 0
+elif [ "$1" = "distclean" ]; then
+    make clean
+    find . -name *.o -exec rm -f {} \;
+    rm -rf out
+    exit 0
 fi
 
 if [ "$1" = "arm64" ]; then
