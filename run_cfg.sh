@@ -14,11 +14,13 @@ fi
 if [ "$1" = "arm64" ]; then
     ARCH=arm64
     ABI="arm64-v8a"
+    API=21
 else
     ARCH=arm
     ABI="armeabi-v7a"
+    API=15
 fi
 
-make OS=android ARCH=${ARCH} NDKROOT=$ANDROID_NDK TARGET=android-15 NDKLEVEL=21 PREFIX=out/$ABI install
+make OS=android ARCH=${ARCH} NDKROOT=$ANDROID_NDK TARGET=android-15 NDKLEVEL=${API} PREFIX=out/$ABI install
 
 exit 0
