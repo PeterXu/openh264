@@ -6,9 +6,14 @@ if [ "$1" = "clean" ]; then
     exit 0
 fi
 
-# arm/arm64
-ARCH=${1:-arm}
-make OS=android ARCH=${ARCH} NDKROOT=$ANDROID_NDK TARGET=android-15 NDKLEVEL=21 PREFIX=out/$ARCH install
-#rm -f out/lib/libopenh264.a
+if [ "$1" = "arm64" ]; then
+    ARCH=arm64
+    ABI="arm64-v8a"
+else
+    ARCH=arm
+    ABI="armeabi-v7a"
+fi
+
+make OS=android ARCH=${ARCH} NDKROOT=$ANDROID_NDK TARGET=android-15 NDKLEVEL=21 PREFIX=out/$ABI install
 
 exit 0
