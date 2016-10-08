@@ -72,7 +72,7 @@ int    g_iDecodedFrameNum = 0;
 //#define NO_DELAY_DECODING // For Demo interfaces test with no delay decoding
 
 void H264DecodeInstance (ISVCDecoder* pDecoder, const char* kpH264FileName, const char* kpOuputFileName,
-                         int32_t& iWidth, int32_t& iHeight, const char* pOptionFileName, const char* pLengthFileName) {
+                         int32_t& iWidth, int32_t& iHeight, const char* pOptionFileName, const char* pLengthFileName, bool bParseOnly) {
   FILE* pH264File   = NULL;
   FILE* pYuvFile    = NULL;
   FILE* pOptionFile = NULL;
@@ -92,9 +92,13 @@ void H264DecodeInstance (ISVCDecoder* pDecoder, const char* kpH264FileName, cons
   uint8_t* pBuf = NULL;
   uint8_t uiStartCode[4] = {0, 0, 0, 1};
 
+  // for decoder
   uint8_t* pData[3] = {NULL};
   uint8_t* pDst[3] = {NULL};
   SBufferInfo sDstBufInfo;
+
+  // for parse-only
+  SParserBsInfo sDstParseInfo;
 
   int32_t iBufPos = 0;
   int32_t iFileSize;
@@ -212,74 +216,114 @@ void H264DecodeInstance (ISVCDecoder* pDecoder, const char* kpH264FileName, cons
 //~end for
 
     iStart = WelsTime();
-    pData[0] = NULL;
-    pData[1] = NULL;
-    pData[2] = NULL;
     uiTimeStamp ++;
-    memset (&sDstBufInfo, 0, sizeof (SBufferInfo));
-    sDstBufInfo.uiInBsTimeStamp = uiTimeStamp;
-#ifndef NO_DELAY_DECODING
-    pDecoder->DecodeFrameNoDelay (pBuf + iBufPos, iSliceSize, pData, &sDstBufInfo);
-#else
-    pDecoder->DecodeFrame2 (pBuf + iBufPos, iSliceSize, pData, &sDstBufInfo);
-#endif
 
-    if (sDstBufInfo.iBufferStatus == 1) {
-      pDst[0] = pData[0];
-      pDst[1] = pData[1];
-      pDst[2] = pData[2];
-    }
-    iEnd    = WelsTime();
-    iTotal += iEnd - iStart;
-    if (sDstBufInfo.iBufferStatus == 1) {
-      cOutputModule.Process ((void**)pDst, &sDstBufInfo, pYuvFile);
-      iWidth  = sDstBufInfo.UsrData.sSystemBuffer.iWidth;
-      iHeight = sDstBufInfo.UsrData.sSystemBuffer.iHeight;
+    if (bParseOnly) {
+      int iSteps = 2;
+      uint8_t *pAvcData = pBuf+iBufPos;
+      int iDataSize = iSliceSize;
+      memset(&sDstParseInfo, 0, sizeof(SParserBsInfo));
 
-      if (pOptionFile != NULL) {
-        if (iWidth != iLastWidth && iHeight != iLastHeight) {
-          fwrite (&iFrameCount, sizeof (iFrameCount), 1, pOptionFile);
-          fwrite (&iWidth , sizeof (iWidth) , 1, pOptionFile);
-          fwrite (&iHeight, sizeof (iHeight), 1, pOptionFile);
-          iLastWidth  = iWidth;
-          iLastHeight = iHeight;
+      do {
+        int ret = pDecoder->DecodeParser(pAvcData, iDataSize, &sDstParseInfo);
+        if (sDstParseInfo.iNalNum > 0) {
+          iWidth  = sDstParseInfo.iSpsWidthInPixel;
+          iHeight = sDstParseInfo.iSpsHeightInPixel;
+          int pDstPos = 0;
+          for (int k=0; k < sDstParseInfo.iNalNum; k++) {
+            if (pYuvFile) {
+              fwrite (sDstParseInfo.pDstBuff + pDstPos, 1, sDstParseInfo.iNalLenInByte[k], pYuvFile);
+              pDstPos += sDstParseInfo.iNalLenInByte[k];
+            }
+          }
+          iFrameCount ++;
         }
+
+        if (ret != 0) {
+          fprintf(stderr, "[Error] DecodeParser - step%d - error: %d\n", (3-iSteps), ret);
+        }else if (sDstParseInfo.iNalNum > 0) {
+          fprintf(stderr, "[INFO] DecodeParser - step%d - size: %dx%d, iBufPos:%d, nalNum: %d, iFrameCount: %d\n", 
+              (3-iSteps), iWidth, iHeight, iBufPos, sDstParseInfo.iNalNum, iFrameCount);
+        }
+
+        if (iSteps == 2) {
+          pAvcData = NULL;
+          iDataSize = 0;
+        }
+        iSteps--;
+      } while(iSteps > 0);
+
+      iEnd    = WelsTime();
+      iTotal += iEnd - iStart;
+    }else {
+      memset (&sDstBufInfo, 0, sizeof (SBufferInfo));
+      sDstBufInfo.uiInBsTimeStamp = uiTimeStamp;
+      pData[0] = NULL;
+      pData[1] = NULL;
+      pData[2] = NULL;
+#ifndef NO_DELAY_DECODING
+      pDecoder->DecodeFrameNoDelay (pBuf + iBufPos, iSliceSize, pData, &sDstBufInfo);
+#else
+      pDecoder->DecodeFrame2 (pBuf + iBufPos, iSliceSize, pData, &sDstBufInfo);
+#endif
+      if (sDstBufInfo.iBufferStatus == 1) {
+        pDst[0] = pData[0];
+        pDst[1] = pData[1];
+        pDst[2] = pData[2];
       }
-      ++ iFrameCount;
-    }
+      iEnd    = WelsTime();
+      iTotal += iEnd - iStart;
+      if (sDstBufInfo.iBufferStatus == 1) {
+        cOutputModule.Process ((void**)pDst, &sDstBufInfo, pYuvFile);
+        iWidth  = sDstBufInfo.UsrData.sSystemBuffer.iWidth;
+        iHeight = sDstBufInfo.UsrData.sSystemBuffer.iHeight;
+
+        if (pOptionFile != NULL) {
+          if (iWidth != iLastWidth && iHeight != iLastHeight) {
+            fwrite (&iFrameCount, sizeof (iFrameCount), 1, pOptionFile);
+            fwrite (&iWidth , sizeof (iWidth) , 1, pOptionFile);
+            fwrite (&iHeight, sizeof (iHeight), 1, pOptionFile);
+            iLastWidth  = iWidth;
+            iLastHeight = iHeight;
+          }
+        }
+        ++ iFrameCount;
+      }
 
 #ifdef NO_DELAY_DECODING
-    iStart = WelsTime();
-    pData[0] = NULL;
-    pData[1] = NULL;
-    pData[2] = NULL;
-    memset (&sDstBufInfo, 0, sizeof (SBufferInfo));
-    sDstBufInfo.uiInBsTimeStamp = uiTimeStamp;
-    pDecoder->DecodeFrame2 (NULL, 0, pData, &sDstBufInfo);
-    if (sDstBufInfo.iBufferStatus == 1) {
-      pDst[0] = pData[0];
-      pDst[1] = pData[1];
-      pDst[2] = pData[2];
-    }
-    iEnd    = WelsTime();
-    iTotal += iEnd - iStart;
-    if (sDstBufInfo.iBufferStatus == 1) {
-      cOutputModule.Process ((void**)pDst, &sDstBufInfo, pYuvFile);
-      iWidth  = sDstBufInfo.UsrData.sSystemBuffer.iWidth;
-      iHeight = sDstBufInfo.UsrData.sSystemBuffer.iHeight;
-
-      if (pOptionFile != NULL) {
-        if (iWidth != iLastWidth && iHeight != iLastHeight) {
-          fwrite (&iFrameCount, sizeof (iFrameCount), 1, pOptionFile);
-          fwrite (&iWidth , sizeof (iWidth) , 1, pOptionFile);
-          fwrite (&iHeight, sizeof (iHeight), 1, pOptionFile);
-          iLastWidth  = iWidth;
-          iLastHeight = iHeight;
-        }
+      iStart = WelsTime();
+      pData[0] = NULL;
+      pData[1] = NULL;
+      pData[2] = NULL;
+      memset (&sDstBufInfo, 0, sizeof (SBufferInfo));
+      sDstBufInfo.uiInBsTimeStamp = uiTimeStamp;
+      pDecoder->DecodeFrame2 (NULL, 0, pData, &sDstBufInfo);
+      if (sDstBufInfo.iBufferStatus == 1) {
+        pDst[0] = pData[0];
+        pDst[1] = pData[1];
+        pDst[2] = pData[2];
       }
-      ++ iFrameCount;
-    }
+      iEnd    = WelsTime();
+      iTotal += iEnd - iStart;
+      if (sDstBufInfo.iBufferStatus == 1) {
+        cOutputModule.Process ((void**)pDst, &sDstBufInfo, pYuvFile);
+        iWidth  = sDstBufInfo.UsrData.sSystemBuffer.iWidth;
+        iHeight = sDstBufInfo.UsrData.sSystemBuffer.iHeight;
+
+        if (pOptionFile != NULL) {
+          if (iWidth != iLastWidth && iHeight != iLastHeight) {
+            fwrite (&iFrameCount, sizeof (iFrameCount), 1, pOptionFile);
+            fwrite (&iWidth , sizeof (iWidth) , 1, pOptionFile);
+            fwrite (&iHeight, sizeof (iHeight), 1, pOptionFile);
+            iLastWidth  = iWidth;
+            iLastHeight = iHeight;
+          }
+        }
+        ++ iFrameCount;
+      }
 #endif
+    }
+
     iBufPos += iSliceSize;
     ++ iSliceIndex;
   }
@@ -336,8 +380,8 @@ int32_t main (int32_t iArgC, char* pArgV[]) {
 
   if (iArgC < 2) {
     printf ("usage 1: h264dec.exe welsdec.cfg\n");
-    printf ("usage 2: h264dec.exe welsdec.264 out.yuv\n");
-    printf ("usage 3: h264dec.exe welsdec.264\n");
+    printf ("usage 2: h264dec.exe welsdec.264 [out.yuv]\n");
+    printf ("usage 3: h264dec.exe in_svc.264 [out_avc.264] -parse\n");
     return 1;
   } else if (iArgC == 2) {
     if (strstr (pArgV[1], ".cfg")) { // read config file //confirmed_safe_unsafe_usage
@@ -419,13 +463,24 @@ int32_t main (int32_t iArgC, char* pArgV[]) {
             printf ("lenght file not specified.\n");
             return 1;
           }
+        } else if (!strcmp (cmd, "-parse")) {
+          memset(&sDecParam, 0, sizeof(sDecParam));
+          sDecParam.uiTargetDqLayer = -1; // required
+          sDecParam.bParseOnly = true;
         }
       }
     }
 
-    if (strOutputFile.empty()) {
-      printf ("No output file specified in configuration file.\n");
-      return 1;
+    if (!strcmp (pArgV[2], "-parse")) {
+      memset(&sDecParam, 0, sizeof(sDecParam));
+      sDecParam.uiTargetDqLayer = -1; // required
+      sDecParam.bParseOnly = true;
+      strOutputFile = "";
+    }else {
+      if (strOutputFile.empty()) {
+        printf ("No output file specified in configuration file.\n");
+        return 1;
+      }
     }
   }
 
@@ -434,7 +489,7 @@ int32_t main (int32_t iArgC, char* pArgV[]) {
     return 1;
   }
 
-
+  
 
 
   if (WelsCreateDecoder (&pDecoder)  || (NULL == pDecoder)) {
@@ -457,7 +512,7 @@ int32_t main (int32_t iArgC, char* pArgV[]) {
 
   H264DecodeInstance (pDecoder, strInputFile.c_str(), !strOutputFile.empty() ? strOutputFile.c_str() : NULL, iWidth,
                       iHeight,
-                      (!strOptionFile.empty() ? strOptionFile.c_str() : NULL), (!strLengthFile.empty() ? strLengthFile.c_str() : NULL));
+                      (!strOptionFile.empty() ? strOptionFile.c_str() : NULL), (!strLengthFile.empty() ? strLengthFile.c_str() : NULL), sDecParam.bParseOnly);
 
   if (sDecParam.pFileNameRestructed != NULL) {
     delete []sDecParam.pFileNameRestructed;
