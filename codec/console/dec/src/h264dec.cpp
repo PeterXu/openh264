@@ -467,7 +467,7 @@ int32_t main (int32_t iArgC, char* pArgV[]) {
           memset(&sDecParam, 0, sizeof(sDecParam));
           sDecParam.uiTargetDqLayer = -1; // required
           sDecParam.bParseOnly = true;
-          strOutputFile = "";
+          //strOutputFile = "";
         }
       }
     }
