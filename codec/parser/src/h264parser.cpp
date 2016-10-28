@@ -93,13 +93,14 @@ long CWelsParser::DecodeParser (const uint8_t *pBuf, size_t iSize) {
         int32_t iWidth  = sDstParseInfo.iSpsWidthInPixel;
         int32_t iHeight = sDstParseInfo.iSpsHeightInPixel;
 
-        int32_t iFrameSize = 0;
+        int32_t iDstPos = 0;
         for (int k=0; k < iNalNum; k++) {
-          iFrameSize += sDstParseInfo.iNalLenInByte[k];
+          int32_t iFrameSize = sDstParseInfo.iNalLenInByte[k];
+          if (m_fnCallback && iFrameSize > 4) {
+            m_fnCallback(sDstParseInfo.pDstBuff+iDstPos, iFrameSize, 1, iWidth, iHeight, m_pUserData);
+          }
+          iDstPos += iFrameSize;
         }
-        if (m_fnCallback)
-          m_fnCallback(sDstParseInfo.pDstBuff, iFrameSize, iNalNum, iWidth, iHeight, m_pUserData);
-
       }
 
       if (iRet != 0) {
@@ -137,6 +138,11 @@ long CWelsParser::Initialize() {
   SDecodingParam sDecParam = {0};
   sDecParam.uiTargetDqLayer = -1; // required
   sDecParam.bParseOnly = true;
+  sDecParam.sVideoProperty.size = sizeof (sDecParam.sVideoProperty);
+
+  int iLevelSetting = (int) WELS_LOG_INFO;
+  pDecoder->SetOption (DECODER_OPTION_TRACE_LEVEL, &iLevelSetting);
+
   iRet = pDecoder->Initialize (&sDecParam);
   if (iRet != cmResultSuccess) {
     pDecoder->Uninitialize();
