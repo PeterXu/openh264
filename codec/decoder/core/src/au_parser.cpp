@@ -156,9 +156,11 @@ uint8_t* ParseNalHeader (PWelsDecoderContext pCtx, SNalUnitHeader* pNalUnitHeade
     }
     pCtx->sDecoderStatistics.iSpsNoExistNalNum++;
     pCtx->iErrorCode = dsNoParamSets;
-    return NULL;
+    if (!pCtx->pParam->bParseOnly)
+      return NULL;
   }
   pCtx->iSpsErrorIgnored = 0;
+
   if (! (IS_SEI_NAL (pNalUnitHeader->eNalUnitType) || IS_PARAM_SETS_NALS (pNalUnitHeader->eNalUnitType)
          || pCtx->bPpsExistAheadFlag)) {
     if (pCtx->bPrintFrameErrorTraceFlag && pCtx->iPpsErrorIgnored == 0) {
@@ -170,9 +172,11 @@ uint8_t* ParseNalHeader (PWelsDecoderContext pCtx, SNalUnitHeader* pNalUnitHeade
     }
     pCtx->sDecoderStatistics.iPpsNoExistNalNum++;
     pCtx->iErrorCode = dsNoParamSets;
-    return NULL;
+    if (!pCtx->pParam->bParseOnly)
+      return NULL;
   }
   pCtx->iPpsErrorIgnored = 0;
+
   if ((IS_VCL_NAL_AVC_BASE (pNalUnitHeader->eNalUnitType) && ! (pCtx->bSpsExistAheadFlag || pCtx->bPpsExistAheadFlag)) ||
       (IS_NEW_INTRODUCED_SVC_NAL (pNalUnitHeader->eNalUnitType) && ! (pCtx->bSpsExistAheadFlag || pCtx->bSubspsExistAheadFlag
           || pCtx->bPpsExistAheadFlag))) {
@@ -185,7 +189,8 @@ uint8_t* ParseNalHeader (PWelsDecoderContext pCtx, SNalUnitHeader* pNalUnitHeade
     }
     pCtx->sDecoderStatistics.iSubSpsNoExistNalNum++;
     pCtx->iErrorCode    |= dsNoParamSets;
-    return NULL;
+    if (!pCtx->pParam->bParseOnly)
+      return NULL;
   }
   pCtx->iSubSpsErrorIgnored = 0;
 
