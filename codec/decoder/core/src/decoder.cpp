@@ -631,10 +631,8 @@ static inline int32_t DecodeFrameConstructionEx(PWelsDecoderContext pCtx, uint8_
       uint8_t* pNalBs = NULL;
       pParser->uiOutBsTimeStamp = (pCurAu->pNalUnitsList[iIdx]) ? pCurAu->pNalUnitsList[iIdx]->uiTimeStamp : 0;
       //pParser->iNalNum = 0;
-      pParser->iSpsWidthInPixel = (pCtx->pSps->iMbWidth << 4) - ((pCtx->pSps->sFrameCrop.iLeftOffset +
-			      pCtx->pSps->sFrameCrop.iRightOffset) << 1);
-      pParser->iSpsHeightInPixel = (pCtx->pSps->iMbHeight << 4) - ((pCtx->pSps->sFrameCrop.iTopOffset +
-			      pCtx->pSps->sFrameCrop.iBottomOffset) << 1);
+      pParser->iSpsWidthInPixel = 0;
+      pParser->iSpsHeightInPixel = 0;
 
       //then VCL data re-write
       while (iIdx <= iEndIdx) {
@@ -797,6 +795,9 @@ int32_t WelsDecodeBs (PWelsDecoderContext pCtx, const uint8_t* kpBsBuf, const in
       if (pCtx->bAuReadyFlag && pCtx->pAccessUnitList->uiAvailUnitsNum != 0) {
         ConstructAccessUnit (pCtx, ppDst, pDstBufInfo);
       }
+    }else {
+      if (pCtx->pParam->bParseOnly) 
+        DecodeFrameConstructionEx(pCtx, ppDst, pDstBufInfo);
     }
     DecodeFinishUpdate (pCtx);
 
