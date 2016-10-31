@@ -8,7 +8,7 @@ OBJS += $(PARSER_OBJS)
 $(PARSER_SRCDIR)/%.$(OBJ): $(PARSER_SRCDIR)/%.cpp
 	$(QUIET_CXX)$(CXX) $(CFLAGS) $(CXXFLAGS) $(INCLUDES) $(PARSER_CFLAGS) $(PARSER_INCLUDES) -c $(CXX_O) $<
 
-ifeq (ios,$(OS))
+ifeq (linux,$(OS))
 $(LIBPREFIX)parser.$(LIBSUFFIX): $(PARSER_OBJS)
 	$(QUIET)rm -f $@
 	$(QUIET_AR)$(AR) $(AR_OPTS) $+

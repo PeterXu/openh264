@@ -88,8 +88,8 @@ long CWelsParser::DecodeParser (const uint8_t *pBuf, size_t iSize) {
 
     do {
       iRet = m_pDecoder->DecodeParser(pAvcData, iSliceSize, &sDstParseInfo);
-      if (sDstParseInfo.iNalNum > 0) {
-        int32_t iNalNum = sDstParseInfo.iNalNum;
+      int32_t iNalNum = sDstParseInfo.iNalNum;
+      if (iNalNum > 0) {
         int32_t iWidth  = sDstParseInfo.iSpsWidthInPixel;
         int32_t iHeight = sDstParseInfo.iSpsHeightInPixel;
 
@@ -104,7 +104,8 @@ long CWelsParser::DecodeParser (const uint8_t *pBuf, size_t iSize) {
       }
 
       if (iRet != 0) {
-        LOGE("DecodeParser - step%d - error: %d, pos: %d\n", (3-iSteps), iRet, iBufPos);
+        LOGE("DecodeParser - step%d - error: %d, pos: %d, num:%d\n", (3-iSteps), iRet, iBufPos, iNalNum);
+        break;
       }
 
       if (iSteps == 2) {
