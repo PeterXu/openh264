@@ -613,6 +613,49 @@ void GetVclNalTemporalId (PWelsDecoderContext pCtx) {
  * \note    N/A
  *************************************************************************************
  */
+static inline int32_t DecodeFrameConstructionEx(PWelsDecoderContext pCtx, uint8_t** ppDst, SBufferInfo* pDstInfo) {
+  if (pCtx->pParam->bParseOnly) { //should exit for parse only to prevent access NULL pDstInfo
+    PAccessUnit pCurAu = pCtx->pAccessUnitList;
+    if (pCurAu) { //correct decoding, add to data buffer
+      SParserBsInfo* pParser = pCtx->pParserBsInfo;
+      SNalUnit* pCurNal = NULL;
+      int32_t iTotalNalLen = 0;
+      int32_t iNalLen = 0;
+      int32_t iNum = 0;
+      while (iNum < pParser->iNalNum) {
+        iTotalNalLen += pParser->iNalLenInByte[iNum++];
+      }
+      uint8_t* pDstBuf = pParser->pDstBuff + iTotalNalLen;
+      int32_t iIdx = pCurAu->uiStartPos;
+      int32_t iEndIdx = pCurAu->uiEndPos;
+      uint8_t* pNalBs = NULL;
+      pParser->uiOutBsTimeStamp = (pCurAu->pNalUnitsList[iIdx]) ? pCurAu->pNalUnitsList[iIdx]->uiTimeStamp : 0;
+      //pParser->iNalNum = 0;
+      pParser->iSpsWidthInPixel = (pCtx->pSps->iMbWidth << 4) - ((pCtx->pSps->sFrameCrop.iLeftOffset +
+			      pCtx->pSps->sFrameCrop.iRightOffset) << 1);
+      pParser->iSpsHeightInPixel = (pCtx->pSps->iMbHeight << 4) - ((pCtx->pSps->sFrameCrop.iTopOffset +
+			      pCtx->pSps->sFrameCrop.iBottomOffset) << 1);
+
+      //then VCL data re-write
+      while (iIdx <= iEndIdx) {
+        pCurNal = pCurAu->pNalUnitsList[iIdx++];
+        iNalLen = pCurNal->sNalData.sVclNal.iNalLength;
+        pNalBs = pCurNal->sNalData.sVclNal.pNalPos;
+        pParser->iNalLenInByte[pParser->iNalNum++] = iNalLen;
+        memcpy(pDstBuf, pNalBs, iNalLen);
+        pDstBuf += iNalLen;
+      }
+			
+      //frame complete
+      pCtx->iTotalNumMbRec = 0;
+      pCtx->bFramePending = false;
+      pCtx->bFrameFinish = true; //finish current frame and mark it
+    }
+  }
+
+  return ERR_NONE;
+}
+
 int32_t WelsDecodeBs (PWelsDecoderContext pCtx, const uint8_t* kpBsBuf, const int32_t kiBsLen,
                       uint8_t** ppDst, SBufferInfo* pDstBufInfo, SParserBsInfo* pDstBsInfo) {
   if (!pCtx->bEndOfStreamFlag) {
@@ -763,7 +806,8 @@ int32_t WelsDecodeBs (PWelsDecoderContext pCtx, const uint8_t* kpBsBuf, const in
 #else
       pCtx->bReferenceLostAtT0Flag = true;
 #endif
-      return pCtx->iErrorCode;
+      if (!pCtx->pParam->bParseOnly)
+        return pCtx->iErrorCode;
     }
     if (iRet) {
       iRet = 0;
@@ -785,7 +829,9 @@ int32_t WelsDecodeBs (PWelsDecoderContext pCtx, const uint8_t* kpBsBuf, const in
     } else {
       pCtx->pAccessUnitList->uiEndPos = pCtx->pAccessUnitList->uiAvailUnitsNum - 1;
 
-      ConstructAccessUnit (pCtx, ppDst, pDstBufInfo);
+      int iErr = ConstructAccessUnit (pCtx, ppDst, pDstBufInfo);
+      if (iErr != ERR_NONE && pCtx->pParam->bParseOnly) 
+        DecodeFrameConstructionEx(pCtx, ppDst, pDstBufInfo);
     }
     DecodeFinishUpdate (pCtx);
 

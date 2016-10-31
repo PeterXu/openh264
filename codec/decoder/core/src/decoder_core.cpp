@@ -740,7 +740,8 @@ int32_t ParseSliceHeaderSyntaxs (PWelsDecoderContext pCtx, PBitStringAux pBs, co
       pCtx->iPPSInvalidNum++;
     }
     pCtx->iErrorCode |= dsNoParamSets;
-    return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_INVALID_PPS_ID);
+    if (!pCtx->pParam->bParseOnly)
+      return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_INVALID_PPS_ID);
   }
   pCtx->iPPSLastInvalidId = -1;
 
@@ -749,7 +750,8 @@ int32_t ParseSliceHeaderSyntaxs (PWelsDecoderContext pCtx, PBitStringAux pBs, co
   if (pPps->uiNumSliceGroups == 0) {
     WelsLog (pLogCtx, WELS_LOG_WARNING, "Invalid PPS referenced");
     pCtx->iErrorCode |= dsNoParamSets;
-    return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_NO_PARAM_SETS);
+    if (!pCtx->pParam->bParseOnly)
+      return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_NO_PARAM_SETS);
   }
 
   if (kbExtensionFlag) {
@@ -766,7 +768,8 @@ int32_t ParseSliceHeaderSyntaxs (PWelsDecoderContext pCtx, PBitStringAux pBs, co
         pCtx->iSubSPSInvalidNum++;
       }
       pCtx->iErrorCode |= dsNoParamSets;
-      return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_INVALID_SPS_ID);
+      if (!pCtx->pParam->bParseOnly)
+        return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_INVALID_SPS_ID);
     }
     pCtx->iSubSPSLastInvalidId = -1;
   } else {
@@ -781,7 +784,8 @@ int32_t ParseSliceHeaderSyntaxs (PWelsDecoderContext pCtx, PBitStringAux pBs, co
         pCtx->iSPSInvalidNum++;
       }
       pCtx->iErrorCode |= dsNoParamSets;
-      return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_INVALID_SPS_ID);
+      if (!pCtx->pParam->bParseOnly)
+        return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_INVALID_SPS_ID);
     }
     pCtx->iSPSLastInvalidId = -1;
     pSps = &pCtx->sSpsBuffer[pPps->iSpsId];
@@ -805,7 +809,8 @@ int32_t ParseSliceHeaderSyntaxs (PWelsDecoderContext pCtx, PBitStringAux pBs, co
 
   if (pSps->uiLog2MaxFrameNum == 0) {
     WelsLog (pLogCtx, WELS_LOG_WARNING, "non existing SPS referenced");
-    return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_NO_PARAM_SETS);
+    if (!pCtx->pParam->bParseOnly)
+      return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_NO_PARAM_SETS);
   }
   // check first_mb_in_slice
   WELS_CHECK_SE_UPPER_ERROR ((uint32_t) (pSliceHead->iFirstMbInSlice), (pSps->uiTotalMbCount - 1), "first_mb_in_slice",
@@ -818,7 +823,8 @@ int32_t ParseSliceHeaderSyntaxs (PWelsDecoderContext pCtx, PBitStringAux pBs, co
   if (!pSps->bFrameMbsOnlyFlag) {
     WelsLog (pLogCtx, WELS_LOG_WARNING, "ParseSliceHeaderSyntaxs(): frame_mbs_only_flag = %d not supported. ",
              pSps->bFrameMbsOnlyFlag);
-    return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_UNSUPPORTED_MBAFF);
+    if (!pCtx->pParam->bParseOnly)
+      return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_UNSUPPORTED_MBAFF);
   }
   pSliceHead->iMbWidth  = pSps->iMbWidth;
   pSliceHead->iMbHeight = pSps->iMbHeight / (1 + pSliceHead->bFieldPicFlag);
@@ -828,7 +834,8 @@ int32_t ParseSliceHeaderSyntaxs (PWelsDecoderContext pCtx, PBitStringAux pBs, co
       WelsLog (pLogCtx, WELS_LOG_WARNING,
                "ParseSliceHeaderSyntaxs(), invaild frame number: %d due to IDR frame introduced!",
                pSliceHead->iFrameNum);
-      return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_INVALID_FRAME_NUM);
+      if (!pCtx->pParam->bParseOnly)
+        return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_INVALID_FRAME_NUM);
     }
     WELS_READ_VERIFY (BsGetUe (pBs, &uiCode)); //idr_pic_id
     // standard 7.4.3 idr_pic_id should be in range 0 to 65535, inclusive.
@@ -1115,6 +1122,7 @@ int32_t ParseSliceHeaderSyntaxs (PWelsDecoderContext pCtx, PBitStringAux pBs, co
       if (pSliceHeadExt->uiScanIdxStart != 0 || pSliceHeadExt->uiScanIdxEnd != 15) {
         WelsLog (pLogCtx, WELS_LOG_WARNING, "uiScanIdxStart (%d) != 0 and uiScanIdxEnd (%d) !=15 not supported here",
                  pSliceHeadExt->uiScanIdxStart, pSliceHeadExt->uiScanIdxEnd);
+      if (!pCtx->pParam->bParseOnly)
         return GENERATE_ERROR_NO (ERR_LEVEL_SLICE_HEADER, ERR_INFO_UNSUPPORTED_MGS);
       }
     } else {
