@@ -735,8 +735,13 @@ int32_t WelsDecodeBs (PWelsDecoderContext pCtx, const uint8_t* kpBsBuf, const in
             }
             CheckAndFinishLastPic (pCtx, ppDst, pDstBufInfo);
             if (pCtx->bAuReadyFlag && pCtx->pAccessUnitList->uiAvailUnitsNum != 0) {
-              ConstructAccessUnit (pCtx, ppDst, pDstBufInfo);
+              int iErr = ConstructAccessUnit (pCtx, ppDst, pDstBufInfo);
+              if (iErr != ERR_NONE && pCtx->pParam->bParseOnly) 
+                DecodeFrameConstructionEx(pCtx, ppDst, pDstBufInfo);
             }
+          }else {
+            if (pCtx->pParam->bParseOnly) 
+              DecodeFrameConstructionEx(pCtx, ppDst, pDstBufInfo);
           }
           DecodeFinishUpdate (pCtx);
 
@@ -793,7 +798,9 @@ int32_t WelsDecodeBs (PWelsDecoderContext pCtx, const uint8_t* kpBsBuf, const in
       }
       CheckAndFinishLastPic (pCtx, ppDst, pDstBufInfo);
       if (pCtx->bAuReadyFlag && pCtx->pAccessUnitList->uiAvailUnitsNum != 0) {
-        ConstructAccessUnit (pCtx, ppDst, pDstBufInfo);
+        int iErr = ConstructAccessUnit (pCtx, ppDst, pDstBufInfo);
+        if (iErr != ERR_NONE && pCtx->pParam->bParseOnly) 
+          DecodeFrameConstructionEx(pCtx, ppDst, pDstBufInfo);
       }
     }else {
       if (pCtx->pParam->bParseOnly) 
