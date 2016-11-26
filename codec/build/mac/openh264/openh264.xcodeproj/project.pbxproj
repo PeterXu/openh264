@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D00B9F971DE97FF700FE6DB2 /* openh264.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D00B9F961DE97FF700FE6DB2 /* openh264.hpp */; };
+		D00B9F991DE97FF700FE6DB2 /* openh264Priv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D00B9F981DE97FF700FE6DB2 /* openh264Priv.hpp */; };
+		D00B9F9B1DE97FF700FE6DB2 /* openh264.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D00B9F9A1DE97FF700FE6DB2 /* openh264.cpp */; };
+		D00B9F9F1DE9803F00FE6DB2 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54D53639196CC8CB005442F9 /* libcommon.a */; };
+		D00B9FA01DE9803F00FE6DB2 /* libprocessing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54D5364B196CC8F3005442F9 /* libprocessing.a */; };
+		D00B9FA11DE9803F00FE6DB2 /* libwelsdec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54D5363F196CC8DA005442F9 /* libwelsdec.a */; };
+		D00B9FA21DE9803F00FE6DB2 /* libwelsenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54D53645196CC8E6005442F9 /* libwelsenc.a */; };
+		D00B9FB91DE9818D00FE6DB2 /* welsDecoderExt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D00B9FB81DE9818D00FE6DB2 /* welsDecoderExt.cpp */; };
+		D00B9FBB1DE9828600FE6DB2 /* welsEncoderExt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D00B9FBA1DE9828600FE6DB2 /* welsEncoderExt.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		54D53638196CC8CB005442F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D53634196CC8CB005442F9 /* common.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CE443D518B722CD0017DF25;
+			remoteInfo = common;
+		};
+		54D5363E196CC8DA005442F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D5363A196CC8DA005442F9 /* welsdec.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CE4427918B6FC360017DF25;
+			remoteInfo = welsdec;
+		};
+		54D53644196CC8E6005442F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D53640196CC8E6005442F9 /* welsenc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CE4431118B6FFA00017DF25;
+			remoteInfo = welsenc;
+		};
+		54D5364A196CC8F3005442F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D53646196CC8F3005442F9 /* processing.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5499477C196A3F3900BA3D87;
+			remoteInfo = processing;
+		};
+		D00B9FA31DE9805900FE6DB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D53646196CC8F3005442F9 /* processing.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5499477B196A3F3900BA3D87;
+			remoteInfo = processing;
+		};
+		D00B9FA51DE9805900FE6DB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D53640196CC8E6005442F9 /* welsenc.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CE4431018B6FFA00017DF25;
+			remoteInfo = welsenc;
+		};
+		D00B9FA71DE9805900FE6DB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D5363A196CC8DA005442F9 /* welsdec.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CE4427818B6FC360017DF25;
+			remoteInfo = welsdec;
+		};
+		D00B9FA91DE9805900FE6DB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D53634196CC8CB005442F9 /* common.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CE443D418B722CD0017DF25;
+			remoteInfo = common;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		54D53634196CC8CB005442F9 /* common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common.xcodeproj; path = ../common/common.xcodeproj; sourceTree = "<group>"; };
+		54D5363A196CC8DA005442F9 /* welsdec.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = welsdec.xcodeproj; path = ../dec/welsdec/welsdec.xcodeproj; sourceTree = "<group>"; };
+		54D53640196CC8E6005442F9 /* welsenc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = welsenc.xcodeproj; path = ../enc/welsenc/welsenc.xcodeproj; sourceTree = "<group>"; };
+		54D53646196CC8F3005442F9 /* processing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = processing.xcodeproj; path = ../processing/processing.xcodeproj; sourceTree = "<group>"; };
+		D00B9F941DE97FF700FE6DB2 /* libopenh264.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libopenh264.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		D00B9F961DE97FF700FE6DB2 /* openh264.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = openh264.hpp; sourceTree = "<group>"; };
+		D00B9F981DE97FF700FE6DB2 /* openh264Priv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = openh264Priv.hpp; sourceTree = "<group>"; };
+		D00B9F9A1DE97FF700FE6DB2 /* openh264.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = openh264.cpp; sourceTree = "<group>"; };
+		D00B9FB11DE980B100FE6DB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D00B9FB81DE9818D00FE6DB2 /* welsDecoderExt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = welsDecoderExt.cpp; path = ../../../../decoder/plus/src/welsDecoderExt.cpp; sourceTree = "<group>"; };
+		D00B9FBA1DE9828600FE6DB2 /* welsEncoderExt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = welsEncoderExt.cpp; path = ../../../../encoder/plus/src/welsEncoderExt.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D00B9F911DE97FF700FE6DB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D00B9F9F1DE9803F00FE6DB2 /* libcommon.a in Frameworks */,
+				D00B9FA01DE9803F00FE6DB2 /* libprocessing.a in Frameworks */,
+				D00B9FA11DE9803F00FE6DB2 /* libwelsdec.a in Frameworks */,
+				D00B9FA21DE9803F00FE6DB2 /* libwelsenc.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		54D53602196CC76D005442F9 = {
+			isa = PBXGroup;
+			children = (
+				D00B9F951DE97FF700FE6DB2 /* openh264 */,
+				D00B9FB01DE980B100FE6DB2 /* mxopenh264 */,
+				54D5360D196CC76D005442F9 /* Frameworks */,
+				54D5360C196CC76D005442F9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		54D5360C196CC76D005442F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D00B9F941DE97FF700FE6DB2 /* libopenh264.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		54D5360D196CC76D005442F9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				54D53646196CC8F3005442F9 /* processing.xcodeproj */,
+				54D53640196CC8E6005442F9 /* welsenc.xcodeproj */,
+				54D5363A196CC8DA005442F9 /* welsdec.xcodeproj */,
+				54D53634196CC8CB005442F9 /* common.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		54D53635196CC8CB005442F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				54D53639196CC8CB005442F9 /* libcommon.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		54D5363B196CC8DA005442F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				54D5363F196CC8DA005442F9 /* libwelsdec.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		54D53641196CC8E6005442F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				54D53645196CC8E6005442F9 /* libwelsenc.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		54D53647196CC8F3005442F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				54D5364B196CC8F3005442F9 /* libprocessing.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D00B9F951DE97FF700FE6DB2 /* openh264 */ = {
+			isa = PBXGroup;
+			children = (
+				D00B9FBA1DE9828600FE6DB2 /* welsEncoderExt.cpp */,
+				D00B9FB81DE9818D00FE6DB2 /* welsDecoderExt.cpp */,
+				D00B9F961DE97FF700FE6DB2 /* openh264.hpp */,
+				D00B9F981DE97FF700FE6DB2 /* openh264Priv.hpp */,
+				D00B9F9A1DE97FF700FE6DB2 /* openh264.cpp */,
+			);
+			path = openh264;
+			sourceTree = "<group>";
+		};
+		D00B9FB01DE980B100FE6DB2 /* mxopenh264 */ = {
+			isa = PBXGroup;
+			children = (
+				D00B9FB11DE980B100FE6DB2 /* Info.plist */,
+			);
+			path = mxopenh264;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D00B9F921DE97FF700FE6DB2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D00B9F971DE97FF700FE6DB2 /* openh264.hpp in Headers */,
+				D00B9F991DE97FF700FE6DB2 /* openh264Priv.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D00B9F931DE97FF700FE6DB2 /* openh264 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D00B9F9C1DE97FF700FE6DB2 /* Build configuration list for PBXNativeTarget "openh264" */;
+			buildPhases = (
+				D00B9F901DE97FF700FE6DB2 /* Sources */,
+				D00B9F911DE97FF700FE6DB2 /* Frameworks */,
+				D00B9F921DE97FF700FE6DB2 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D00B9FA41DE9805900FE6DB2 /* PBXTargetDependency */,
+				D00B9FA61DE9805900FE6DB2 /* PBXTargetDependency */,
+				D00B9FA81DE9805900FE6DB2 /* PBXTargetDependency */,
+				D00B9FAA1DE9805900FE6DB2 /* PBXTargetDependency */,
+			);
+			name = openh264;
+			productName = openh264;
+			productReference = D00B9F941DE97FF700FE6DB2 /* libopenh264.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		54D53603196CC76D005442F9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = com.cisco;
+				TargetAttributes = {
+					D00B9F931DE97FF700FE6DB2 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 54D53606196CC76D005442F9 /* Build configuration list for PBXProject "openh264" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 54D53602196CC76D005442F9;
+			productRefGroup = 54D5360C196CC76D005442F9 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 54D53635196CC8CB005442F9 /* Products */;
+					ProjectRef = 54D53634196CC8CB005442F9 /* common.xcodeproj */;
+				},
+				{
+					ProductGroup = 54D53647196CC8F3005442F9 /* Products */;
+					ProjectRef = 54D53646196CC8F3005442F9 /* processing.xcodeproj */;
+				},
+				{
+					ProductGroup = 54D5363B196CC8DA005442F9 /* Products */;
+					ProjectRef = 54D5363A196CC8DA005442F9 /* welsdec.xcodeproj */;
+				},
+				{
+					ProductGroup = 54D53641196CC8E6005442F9 /* Products */;
+					ProjectRef = 54D53640196CC8E6005442F9 /* welsenc.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D00B9F931DE97FF700FE6DB2 /* openh264 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		54D53639196CC8CB005442F9 /* libcommon.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcommon.a;
+			remoteRef = 54D53638196CC8CB005442F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		54D5363F196CC8DA005442F9 /* libwelsdec.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwelsdec.a;
+			remoteRef = 54D5363E196CC8DA005442F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		54D53645196CC8E6005442F9 /* libwelsenc.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwelsenc.a;
+			remoteRef = 54D53644196CC8E6005442F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		54D5364B196CC8F3005442F9 /* libprocessing.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libprocessing.a;
+			remoteRef = 54D5364A196CC8F3005442F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D00B9F901DE97FF700FE6DB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D00B9FBB1DE9828600FE6DB2 /* welsEncoderExt.cpp in Sources */,
+				D00B9FB91DE9818D00FE6DB2 /* welsDecoderExt.cpp in Sources */,
+				D00B9F9B1DE97FF700FE6DB2 /* openh264.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D00B9FA41DE9805900FE6DB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = processing;
+			targetProxy = D00B9FA31DE9805900FE6DB2 /* PBXContainerItemProxy */;
+		};
+		D00B9FA61DE9805900FE6DB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = welsenc;
+			targetProxy = D00B9FA51DE9805900FE6DB2 /* PBXContainerItemProxy */;
+		};
+		D00B9FA81DE9805900FE6DB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = welsdec;
+			targetProxy = D00B9FA71DE9805900FE6DB2 /* PBXContainerItemProxy */;
+		};
+		D00B9FAA1DE9805900FE6DB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = common;
+			targetProxy = D00B9FA91DE9805900FE6DB2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		54D5362C196CC76D005442F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
+			};
+			name = Debug;
+		};
+		54D5362D196CC76D005442F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = macosx;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = x86_64;
+			};
+			name = Release;
+		};
+		D00B9F9D1DE97FF700FE6DB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "-";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../api/svc,
+					../../../common/inc,
+					../../../decoder/core/inc,
+					../../../decoder/plus/inc,
+					../../../encoder/core/inc,
+					../../../encoder/plus/inc,
+					../../../processing/interface,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D00B9F9E1DE97FF700FE6DB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../api/svc,
+					../../../common/inc,
+					../../../decoder/core/inc,
+					../../../decoder/plus/inc,
+					../../../encoder/core/inc,
+					../../../encoder/plus/inc,
+					../../../processing/interface,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		54D53606196CC76D005442F9 /* Build configuration list for PBXProject "openh264" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54D5362C196CC76D005442F9 /* Debug */,
+				54D5362D196CC76D005442F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D00B9F9C1DE97FF700FE6DB2 /* Build configuration list for PBXNativeTarget "openh264" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D00B9F9D1DE97FF700FE6DB2 /* Debug */,
+				D00B9F9E1DE97FF700FE6DB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 54D53603196CC76D005442F9 /* Project object */;
+}
