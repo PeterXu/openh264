@@ -173,6 +173,7 @@ int32_t   iCurrentBitsLevel;//0:normal; 1:limited; 2:exceeded.
 
 int32_t   iIdrNum;
 int64_t   iIntraComplexity; //255*255(MaxMbSAD)*36864(MaxFS) make the highest bit of 32-bit integer 1
+int64_t   iIntraComplxMean;
 int32_t   iIntraMbCount;
 
 int8_t    iTlOfFrames[VGOP_SIZE];
@@ -184,6 +185,7 @@ int32_t*   pGomForegroundBlockNum;
 int32_t*   pCurrentFrameGomSad;
 int32_t*   pGomCost;
 
+int32_t   bEnableGomQp;
 int32_t   iAverageFrameQp;
 int32_t   iMinFrameQp;
 int32_t   iMaxFrameQp;
