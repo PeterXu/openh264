@@ -422,7 +422,29 @@ void RcInitIdrQp (sWelsEncCtx* pEncCtx) {
   pWelsSvcRc->iLastCalculatedQScale = pEncCtx->iGlobalQp;
 }
 
+void RcGetQpRange(sWelsEncCtx* pEncCtx, int32_t &iMaxQp, int32_t &iMinQp) {
+  int32_t iBppIndex = 0;
+  int32_t iQpRangeArray[4][2] = {{37, 15}, {38, 16}, {39, 17}, {40, 22}};
+
+  SSpatialLayerConfig* pDLayerParam     = &pEncCtx->pSvcParam->sSpatialLayers[pEncCtx->uiDependencyId];
+  if (pDLayerParam->iVideoWidth * pDLayerParam->iVideoHeight <= 28800) // 90p video:160*90
+    iBppIndex = 0;
+  else if (pDLayerParam->iVideoWidth * pDLayerParam->iVideoHeight <= 115200) // 180p video:320*180
+    iBppIndex = 1;
+  else if (pDLayerParam->iVideoWidth * pDLayerParam->iVideoHeight <= 460800) // 360p video:640*360
+    iBppIndex = 2;
+  else
+    iBppIndex = 3;
+
+  iMaxQp = iQpRangeArray[iBppIndex][0];
+  iMinQp = iQpRangeArray[iBppIndex][1];
+}
+
 void RcCalculateIdrQp (sWelsEncCtx* pEncCtx) {
+  int32_t iMaxQp = 0;
+  int32_t iMinQp = 0;
+  RcGetQpRange(pEncCtx, iMaxQp, iMinQp);
+
   SWelsSvcRc* pWelsSvcRc = &pEncCtx->pWelsSvcRc[pEncCtx->uiDependencyId];
 //obtain the idr qp using previous idr complexity
   if (pWelsSvcRc->iNumberMbFrame != pWelsSvcRc->iIntraMbCount) {
@@ -432,6 +454,7 @@ void RcCalculateIdrQp (sWelsEncCtx* pEncCtx) {
   pWelsSvcRc->iInitialQp = RcConvertQStep2Qp (WELS_DIV_ROUND (pWelsSvcRc->iIntraComplexity,
                            pWelsSvcRc->iTargetBits));
   pWelsSvcRc->iInitialQp = WELS_CLIP3 (pWelsSvcRc->iInitialQp, pEncCtx->pSvcParam->iMinQp, pEncCtx->pSvcParam->iMaxQp);
+  pWelsSvcRc->iInitialQp = WELS_CLIP3 (pWelsSvcRc->iInitialQp, iMinQp, iMaxQp);
   pEncCtx->iGlobalQp = pWelsSvcRc->iInitialQp;
   pWelsSvcRc->iQStep = RcConvertQp2QStep (pEncCtx->iGlobalQp);
   pWelsSvcRc->iLastCalculatedQScale = pEncCtx->iGlobalQp;
@@ -443,6 +466,10 @@ void RcCalculatePictureQp (sWelsEncCtx* pEncCtx) {
   int32_t iTl                   = pEncCtx->uiTemporalId;
   SRCTemporal* pTOverRc         = &pWelsSvcRc->pTemporalOverRc[iTl];
   int32_t iLumaQp = 0;
+
+  int32_t iMaxQp = 0;
+  int32_t iMinQp = 0;
+  RcGetQpRange(pEncCtx, iMaxQp, iMinQp);
 
   if (0 == pTOverRc->iPFrameNum) {
     iLumaQp = pWelsSvcRc->iInitialQp;
@@ -504,6 +531,7 @@ void RcCalculatePictureQp (sWelsEncCtx* pEncCtx) {
                                INT_MULTIPLY);
     iLumaQp = WELS_CLIP3 (iLumaQp, pTOverRc->iMinQp, pTOverRc->iMaxQp);
   }
+  iLumaQp = WELS_CLIP3 (iLumaQp,  iMinQp, iMaxQp);
   pWelsSvcRc->iQStep = RcConvertQp2QStep (iLumaQp);
   pWelsSvcRc->iLastCalculatedQScale = iLumaQp;
   pEncCtx->iGlobalQp = iLumaQp;
