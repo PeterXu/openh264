@@ -387,7 +387,7 @@ void RcInitIdrQp (sWelsEncCtx* pEncCtx) {
 //512k@24fps for 360p:  bpp 0.09    QP:30
 //1500k@30fps for 720p: bpp 0.05    QP:32
   double dBppArray[4][3] = {{0.5, 0.75, 1.0}, {0.2, 0.3, 0.4}, {0.05, 0.09, 0.13}, {0.03, 0.06, 0.1}};
-  int32_t dInitialQPArray[4][4] = {{28, 26, 24, 22}, {30, 28, 26, 24}, {32, 30, 28, 26}, {34, 32, 30, 28}};
+  int32_t dInitialQPArray[4][4] = {{26, 24, 22, 20}, {28, 26, 24, 22}, {30, 28, 26, 24}, {32, 30, 28, 26}};
   int32_t iBppIndex = 0;
 
   SWelsSvcRc* pWelsSvcRc                = &pEncCtx->pWelsSvcRc[pEncCtx->uiDependencyId];
@@ -424,7 +424,7 @@ void RcInitIdrQp (sWelsEncCtx* pEncCtx) {
 
 void RcGetQpRange(sWelsEncCtx* pEncCtx, int32_t &iMaxQp, int32_t &iMinQp) {
   int32_t iBppIndex = 0;
-  int32_t iQpRangeArray[4][2] = {{37, 15}, {38, 16}, {39, 17}, {40, 22}};
+  int32_t iQpRangeArray[4][2] = {{35, 12}, {37, 13}, {39, 14}, {44, 18}};
 
   SSpatialLayerConfig* pDLayerParam     = &pEncCtx->pSvcParam->sSpatialLayers[pEncCtx->uiDependencyId];
   if (pDLayerParam->iVideoWidth * pDLayerParam->iVideoHeight <= 28800) // 90p video:160*90
