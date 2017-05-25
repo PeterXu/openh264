@@ -30,6 +30,13 @@ typedef void (* FnParserCallback)(const uint8_t *frame, size_t size, int nalnum,
  * step5: WelsDestroyParser(&pParser); it contains the call of pParser->Uninitialize().
  */
 
+enum ParseError_t {
+    ParseErrorFree          = 0x00,
+    ParseRefLost            = 0x02,
+    ParseBitstreamError     = 0x04,
+    ParseNoParamSets        = 0x10,
+};
+
 class ISVCParser {
 public:
   virtual ~ISVCParser() {}

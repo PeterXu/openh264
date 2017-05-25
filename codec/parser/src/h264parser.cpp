@@ -57,7 +57,7 @@ long CWelsParser::DecodeParser (const uint8_t *pBuf, size_t iSize) {
   if (m_pDecoder == NULL)
     return -1;
 
-  int32_t iRet = 0;
+  int32_t iRet = -1;
   int32_t iBufPos = 0;
   SParserBsInfo sDstParseInfo;
 
@@ -88,29 +88,28 @@ long CWelsParser::DecodeParser (const uint8_t *pBuf, size_t iSize) {
 
     do {
       iRet = m_pDecoder->DecodeParser(pAvcData, iSliceSize, &sDstParseInfo);
-      int32_t iNalNum = sDstParseInfo.iNalNum;
-      if (iNalNum > 0) {
+      if (iRet != dsErrorFree) {
+        LOGE("DecodeParser - step%d - error: %d, pos: %d\n", (3-iSteps), iRet, iBufPos);
+        break;
+      }
+
+      if (m_fnCallback && sDstParseInfo.iNalNum > 0) {
         int32_t iWidth  = sDstParseInfo.iSpsWidthInPixel;
         int32_t iHeight = sDstParseInfo.iSpsHeightInPixel;
-
         int32_t iDstPos = 0;
-        for (int k=0; k < iNalNum; k++) {
+        for (int k=0; k < sDstParseInfo.iNalNum; k++) {
           int32_t iFrameSize = sDstParseInfo.iNalLenInByte[k];
-          if (m_fnCallback && iFrameSize > 4) {
+          if (iFrameSize > 4) {
             m_fnCallback(sDstParseInfo.pDstBuff+iDstPos, iFrameSize, 1, iWidth, iHeight, m_pUserData);
           }
           iDstPos += iFrameSize;
         }
       }
 
-      if (iRet != 0) {
-        LOGE("DecodeParser - step%d - error: %d, pos: %d, num:%d\n", (3-iSteps), iRet, iBufPos, iNalNum);
-        break;
-      }
-
       if (iSteps == 2) {
         pAvcData = NULL;
         iSliceSize = 0;
+        memset(&sDstParseInfo, 0, sizeof(SParserBsInfo));
       }
     } while((--iSteps) > 0);
   }
