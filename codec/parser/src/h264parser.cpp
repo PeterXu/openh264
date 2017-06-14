@@ -89,7 +89,9 @@ long CWelsParser::DecodeParser (const uint8_t *pBuf, size_t iSize) {
     do {
       iRet = m_pDecoder->DecodeParser(pAvcData, iSliceSize, &sDstParseInfo);
       if (iRet != dsErrorFree) {
-        LOGE("DecodeParser - step%d - error: %d, pos: %d\n", (3-iSteps), iRet, iBufPos);
+        if (iRet != dsFramePending) {
+          LOGE("DecodeParser - step%d - error: %d, pos: %d\n", (3-iSteps), iRet, iBufPos);
+        }
         break;
       }
 

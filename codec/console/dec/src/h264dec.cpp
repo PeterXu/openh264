@@ -239,8 +239,10 @@ void H264DecodeInstance (ISVCDecoder* pDecoder, const char* kpH264FileName, cons
           iFrameCount ++;
         }
 
-        if (ret != 0) {
-          fprintf(stderr, "[Error] DecodeParser - step%d - error: %d, num: %d\n", (3-iSteps), ret, sDstParseInfo.iNalNum);
+        if (ret != dsErrorFree) {
+          if (ret != dsFramePending)
+            fprintf(stderr, "[Error] DecodeParser - step%d - error: %d, num: %d\n", 
+              (3-iSteps), ret, sDstParseInfo.iNalNum);
         }else if (sDstParseInfo.iNalNum > 0) {
           fprintf(stderr, "[INFO] DecodeParser - step%d - size: %dx%d, iBufPos:%d, nalNum: %d, iFrameCount: %d\n", 
               (3-iSteps), iWidth, iHeight, iBufPos, sDstParseInfo.iNalNum, iFrameCount);
