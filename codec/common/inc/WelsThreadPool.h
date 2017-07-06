@@ -57,6 +57,9 @@ class  CWelsThreadPool : public CWelsThread, public IWelsTaskThreadSink {
     DEFAULT_THREAD_NUM = 4,
   };
 
+  static void AddThreadReference();
+  static void RemoveThreadReference();
+
   static WELS_THREAD_ERROR_CODE SetThreadNum (int32_t iMaxThreadNum);
 
   static CWelsThreadPool& AddReference();
@@ -103,6 +106,10 @@ class  CWelsThreadPool : public CWelsThread, public IWelsTaskThreadSink {
   static int32_t   m_iRefCount;
   static CWelsLock m_cInitLock;
   static int32_t   m_iMaxThreadNum;
+
+  static CWelsLock m_cThreadLock;
+  static int32_t   m_iThreadRefCount;
+  static CWelsThreadPool m_cThreadPoolSelf;
 
   CWelsCircleQueue<IWelsTask>* m_cWaitedTasks;
   CWelsCircleQueue<CWelsTaskThread>* m_cIdleThreads;

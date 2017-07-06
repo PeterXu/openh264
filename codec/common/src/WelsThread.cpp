@@ -113,6 +113,8 @@ void CWelsThread::Kill() {
 WELS_THREAD_ROUTINE_TYPE  CWelsThread::TheThread (void* pParam) {
   CWelsThread* pThis = static_cast<CWelsThread*> (pParam);
 
+  WelsThreadSetName ("CWelsTaskThread-codec");
+
   pThis->SetRunning (true);
 
   pThis->Thread();

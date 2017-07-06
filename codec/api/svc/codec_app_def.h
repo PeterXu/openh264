@@ -141,7 +141,9 @@ typedef enum {
 
   ENCODER_OPTION_IS_LOSSLESS_LINK,            ///< advanced algorithmetic settings
 
-  ENCODER_OPTION_BITS_VARY_PERCENTAGE        ///< bit vary percentage
+  ENCODER_OPTION_BITS_VARY_PERCENTAGE,        ///< bit vary percentage
+
+  ENCODER_OPTION_THREAD_POOL_REFERENECE,      ///< add(1)/remove(0) reference(int32)
 } ENCODER_OPTION;
 
 /**

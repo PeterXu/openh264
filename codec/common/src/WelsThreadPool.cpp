@@ -43,6 +43,10 @@
 
 namespace WelsCommon {
 
+CWelsThreadPool CWelsThreadPool::m_cThreadPoolSelf;
+int32_t CWelsThreadPool::m_iThreadRefCount = 0;
+CWelsLock CWelsThreadPool::m_cThreadLock;
+
 int32_t CWelsThreadPool::m_iRefCount = 0;
 CWelsLock CWelsThreadPool::m_cInitLock;
 int32_t CWelsThreadPool::m_iMaxThreadNum = DEFAULT_THREAD_NUM;
@@ -74,10 +78,25 @@ WELS_THREAD_ERROR_CODE CWelsThreadPool::SetThreadNum (int32_t iMaxThreadNum) {
   return WELS_THREAD_ERROR_OK;
 }
 
+void CWelsThreadPool::AddThreadReference()
+{
+  CWelsAutoLock  cLock (m_cThreadLock);
+  m_iThreadRefCount++;
+}
+
+void CWelsThreadPool::RemoveThreadReference()
+{
+  CWelsAutoLock  cLock (m_cThreadLock);
+  if (m_iThreadRefCount <= 0)
+	return;
+  m_iThreadRefCount--;
+  if (m_iThreadRefCount == 0) {
+	m_cThreadPoolSelf.RemoveInstance();
+  }
+}
 
 CWelsThreadPool& CWelsThreadPool::AddReference () {
   CWelsAutoLock  cLock (m_cInitLock);
-  static CWelsThreadPool m_cThreadPoolSelf;
   if (m_iRefCount == 0) {
     //TODO: will remove this afterwards
     if (WELS_THREAD_ERROR_OK != m_cThreadPoolSelf.Init()) {
@@ -95,6 +114,10 @@ CWelsThreadPool& CWelsThreadPool::AddReference () {
 void CWelsThreadPool::RemoveInstance() {
   CWelsAutoLock  cLock (m_cInitLock);
   //fprintf(stdout, "m_iRefCount=%d\n", m_iRefCount);
+  if (m_iRefCount == 1 && m_iThreadRefCount > 0)
+	return;
+  if (m_iRefCount <= 0)
+	return;
   -- m_iRefCount;
   if (0 == m_iRefCount) {
     StopAllRunning();
@@ -106,7 +129,7 @@ void CWelsThreadPool::RemoveInstance() {
 
 bool CWelsThreadPool::IsReferenced() {
   CWelsAutoLock  cLock (m_cInitLock);
-  return (m_iRefCount>0);
+  return (m_iRefCount>0 && m_iThreadRefCount==0);
 }
 
 

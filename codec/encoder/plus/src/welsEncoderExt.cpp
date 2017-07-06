@@ -1151,6 +1151,14 @@ int CWelsH264SVCEncoder::SetOption (ENCODER_OPTION eOptionId, void* pOption) {
              "CWelsH264SVCEncoder::SetOption():ENCODER_OPTION_BITS_VARY_PERCENTAGE,iBitsVaryPercentage = %d", iValue);
   }
   break;
+  case ENCODER_OPTION_THREAD_POOL_REFERENECE: {
+    int32_t iValue = * (static_cast<int32_t*> (pOption));
+    if (iValue == 1)   CWelsThreadPool::AddThreadReference();
+    else if (iValue == 0) CWelsThreadPool::RemoveThreadReference();
+    WelsLog (&m_pWelsTrace->m_sLogCtx, WELS_LOG_INFO,
+             "CWelsH264SVCEncoder::SetOption():ENCODER_OPTION_THREAD_POOL_REFERENECE,add/remove = %d", iValue);
+  }
+  break;
 
   default:
     return cmInitParaError;
