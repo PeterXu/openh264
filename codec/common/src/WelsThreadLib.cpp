@@ -279,6 +279,8 @@ WELS_THREAD_ERROR_CODE    WelsThreadCreate (WELS_THREAD_HANDLE* thread,  LPWELS_
 WELS_THREAD_ERROR_CODE WelsThreadSetName (const char* thread_name) {
 #ifdef APPLE_IOS
   pthread_setname_np(thread_name);
+#elif defined(__APPLE__)
+  pthread_setname_np(thread_name);
 #endif
 #if defined(__ANDROID__) && __ANDROID_API__ >= 9
   pthread_setname_np(pthread_self(), thread_name);

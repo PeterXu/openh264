@@ -165,6 +165,7 @@ WELS_THREAD_ERROR_CODE CWelsThreadPool::Init () {
 
   CWelsAutoLock  cLock (m_cLockPool);
 
+  WelsThreadSetName ("CWelsMainThread");
   m_cWaitedTasks = new CWelsCircleQueue<IWelsTask>();
   m_cIdleThreads = new CWelsCircleQueue<CWelsTaskThread>();
   m_cBusyThreads = new CWelsList<CWelsTaskThread>();
