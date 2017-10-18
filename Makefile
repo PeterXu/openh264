@@ -216,6 +216,7 @@ ifneq (ios, $(OS))
 ifneq (msvc-wp, $(OS))
 include $(SRC_PATH)codec/console/dec/targets.mk
 include $(SRC_PATH)codec/console/enc/targets.mk
+include $(SRC_PATH)codec/console/prs/targets.mk
 include $(SRC_PATH)codec/console/common/targets.mk
 endif
 endif
