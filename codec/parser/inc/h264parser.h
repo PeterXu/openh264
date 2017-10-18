@@ -59,7 +59,7 @@ public:
    *                However, suggestion: the max size of passed data is not more than 1M each time.
    * @param iSize   the size of nal data in pBuf
    */
-  virtual long DecodeParser (const uint8_t *pBuf, size_t iSize) = 0;
+  virtual long DecodeParser (const uint8_t *pBuf, size_t iSize, bool needSplit) = 0;
 };
 
 

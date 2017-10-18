@@ -42,7 +42,7 @@ public:
 
   virtual long Initialize ();
   virtual long Uninitialize ();
-  virtual long DecodeParser (const uint8_t *pBuf, size_t iSize);
+  virtual long DecodeParser (const uint8_t *pBuf, size_t iSize, bool needSplit);
   virtual void SetCallback (FnParserCallback callback, void *userdata);
 
 private:
@@ -53,7 +53,7 @@ private:
 
 
 
-long CWelsParser::DecodeParser (const uint8_t *pBuf, size_t iSize) {
+long CWelsParser::DecodeParser (const uint8_t *pBuf, size_t iSize, bool needSplit) {
   if (m_pDecoder == NULL)
     return -1;
 
@@ -61,18 +61,22 @@ long CWelsParser::DecodeParser (const uint8_t *pBuf, size_t iSize) {
   int32_t iBufPos = 0;
   SParserBsInfo sDstParseInfo;
 
-  while (true) {
+  do {
     if (iBufPos >= iSize) { // no h264 data
       break;
     }
 
     // To acquire one nal from buffer
     int32_t i = 0;
-    for (i = 0; i < iSize; i++) {
-      if ((pBuf[iBufPos+i] == 0 && pBuf[iBufPos+i+1] == 0 && pBuf[iBufPos+i+2] == 0 && pBuf[iBufPos+i+3] == 1 && i > 0) || 
-          (pBuf[iBufPos+i] == 0 && pBuf[iBufPos+i+1] == 0 && pBuf[iBufPos+i+2] == 1 && i > 0)) {
-          break;
+    if (needSplit) {
+      for (i = 0; i < iSize; i++) {
+        if ((pBuf[iBufPos+i] == 0 && pBuf[iBufPos+i+1] == 0 && pBuf[iBufPos+i+2] == 0 && pBuf[iBufPos+i+3] == 1 && i > 0) || 
+            (pBuf[iBufPos+i] == 0 && pBuf[iBufPos+i+1] == 0 && pBuf[iBufPos+i+2] == 1 && i > 0)) {
+            break;
         }
+      }
+    }else {
+      i = iSize;
     }
 
     int32_t iSliceSize = i;
@@ -114,7 +118,8 @@ long CWelsParser::DecodeParser (const uint8_t *pBuf, size_t iSize) {
         memset(&sDstParseInfo, 0, sizeof(SParserBsInfo));
       }
     } while((--iSteps) > 0);
-  }
+
+  }while(needSplit);
 
   return iRet;
 }
