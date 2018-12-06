@@ -6,7 +6,7 @@ SHLDFLAGS = -dynamiclib -twolevel_namespace -undefined dynamic_lookup \
 	-fno-common -headerpad_max_install_names -install_name \
 	$(SHAREDLIB_DIR)/$(LIBPREFIX)$(PROJECT_NAME).$(SHAREDLIBSUFFIXVER)
 SHARED = -dynamiclib
-CFLAGS += -Wall -fPIC -MMD -MP
+CFLAGS += -Wall -fPIC -MMD -MP -fstack-protector-strong
 LDFLAGS += -lpthread
 ifeq ($(ASM_ARCH), x86)
 ASMFLAGS += -DPREFIX
