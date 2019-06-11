@@ -7,6 +7,20 @@ clean_objs() {
 	rm -f ./codec/common/src/cpu-features.o
 }
 
+bld_none() {
+    echo "usage: $0 android|ios|mac|win"
+}
+
+android_dname() {
+	if [ "$1" = "arm" ]; then
+		echo "armeabi-v7a"
+	elif [ "$1" = "arm64" ]; then
+		echo "arm64-v8a"
+    else
+	    echo "$1"
+	fi
+}
+
 bld_android() {
 	dpath="libs/android"
 	mkdir -p $dpath
@@ -14,8 +28,9 @@ bld_android() {
 	for arch in $archs; do
 		clean_objs
 		make OS=android NDKROOT=/usr/local/android-ndk TARGET=android-23 ARCH=$arch NDKLEVEL=23
-		mkdir -p $dpath/$arch
-		cp -f libopenh264.so $dpath/$arch
+		dname=$(android_dname $arch)
+		mkdir -p $dpath/$dname
+		cp -f libopenh264.so $dpath/$dname
 	done
 }
 
