@@ -16,6 +16,13 @@
 		D00B9FA21DE9803F00FE6DB2 /* libwelsenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54D53645196CC8E6005442F9 /* libwelsenc.a */; };
 		D00B9FB91DE9818D00FE6DB2 /* welsDecoderExt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D00B9FB81DE9818D00FE6DB2 /* welsDecoderExt.cpp */; };
 		D00B9FBB1DE9828600FE6DB2 /* welsEncoderExt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D00B9FBA1DE9828600FE6DB2 /* welsEncoderExt.cpp */; };
+		D060DF3223A72D0000E81CEE /* welsEncoderExt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D00B9FBA1DE9828600FE6DB2 /* welsEncoderExt.cpp */; };
+		D060DF3323A72D0000E81CEE /* welsDecoderExt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D00B9FB81DE9818D00FE6DB2 /* welsDecoderExt.cpp */; };
+		D060DF3423A72D0400E81CEE /* openh264.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D00B9F9A1DE97FF700FE6DB2 /* openh264.cpp */; };
+		D060DF3523A72D0E00E81CEE /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54D53639196CC8CB005442F9 /* libcommon.a */; };
+		D060DF3623A72D0E00E81CEE /* libprocessing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54D5364B196CC8F3005442F9 /* libprocessing.a */; };
+		D060DF3723A72D0E00E81CEE /* libwelsdec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54D5363F196CC8DA005442F9 /* libwelsdec.a */; };
+		D060DF3823A72D0E00E81CEE /* libwelsenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54D53645196CC8E6005442F9 /* libwelsenc.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +82,34 @@
 			remoteGlobalIDString = 4CE443D418B722CD0017DF25;
 			remoteInfo = common;
 		};
+		D060DF2A23A72CF900E81CEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D53646196CC8F3005442F9 /* processing.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5499477B196A3F3900BA3D87;
+			remoteInfo = processing;
+		};
+		D060DF2C23A72CF900E81CEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D53640196CC8E6005442F9 /* welsenc.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CE4431018B6FFA00017DF25;
+			remoteInfo = welsenc;
+		};
+		D060DF2E23A72CF900E81CEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D5363A196CC8DA005442F9 /* welsdec.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CE4427818B6FC360017DF25;
+			remoteInfo = welsdec;
+		};
+		D060DF3023A72CF900E81CEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54D53634196CC8CB005442F9 /* common.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CE443D418B722CD0017DF25;
+			remoteInfo = common;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +124,8 @@
 		D00B9FB11DE980B100FE6DB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D00B9FB81DE9818D00FE6DB2 /* welsDecoderExt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = welsDecoderExt.cpp; path = ../../../../decoder/plus/src/welsDecoderExt.cpp; sourceTree = "<group>"; };
 		D00B9FBA1DE9828600FE6DB2 /* welsEncoderExt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = welsEncoderExt.cpp; path = ../../../../encoder/plus/src/welsEncoderExt.cpp; sourceTree = "<group>"; };
+		D060DF2423A72CE000E81CEE /* openh264x.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = openh264x.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		D060DF2623A72CE000E81CEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +140,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D060DF2123A72CE000E81CEE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D060DF3523A72D0E00E81CEE /* libcommon.a in Frameworks */,
+				D060DF3623A72D0E00E81CEE /* libprocessing.a in Frameworks */,
+				D060DF3723A72D0E00E81CEE /* libwelsdec.a in Frameworks */,
+				D060DF3823A72D0E00E81CEE /* libwelsenc.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -111,6 +159,7 @@
 			children = (
 				D00B9F951DE97FF700FE6DB2 /* openh264 */,
 				D00B9FB01DE980B100FE6DB2 /* mxopenh264 */,
+				D060DF2523A72CE000E81CEE /* openh264x */,
 				54D5360D196CC76D005442F9 /* Frameworks */,
 				54D5360C196CC76D005442F9 /* Products */,
 			);
@@ -120,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				D00B9F941DE97FF700FE6DB2 /* libopenh264.dylib */,
+				D060DF2423A72CE000E81CEE /* openh264x.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,6 +237,14 @@
 			path = mxopenh264;
 			sourceTree = "<group>";
 		};
+		D060DF2523A72CE000E81CEE /* openh264x */ = {
+			isa = PBXGroup;
+			children = (
+				D060DF2623A72CE000E81CEE /* Info.plist */,
+			);
+			path = openh264x;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -223,6 +281,27 @@
 			productReference = D00B9F941DE97FF700FE6DB2 /* libopenh264.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
+		D060DF2323A72CE000E81CEE /* openh264x */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D060DF2923A72CE000E81CEE /* Build configuration list for PBXNativeTarget "openh264x" */;
+			buildPhases = (
+				D060DF2023A72CE000E81CEE /* Sources */,
+				D060DF2123A72CE000E81CEE /* Frameworks */,
+				D060DF2223A72CE000E81CEE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D060DF2B23A72CF900E81CEE /* PBXTargetDependency */,
+				D060DF2D23A72CF900E81CEE /* PBXTargetDependency */,
+				D060DF2F23A72CF900E81CEE /* PBXTargetDependency */,
+				D060DF3123A72CF900E81CEE /* PBXTargetDependency */,
+			);
+			name = openh264x;
+			productName = openh264x;
+			productReference = D060DF2423A72CE000E81CEE /* openh264x.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -236,6 +315,11 @@
 						CreatedOnToolsVersion = 8.0;
 						ProvisioningStyle = Automatic;
 					};
+					D060DF2323A72CE000E81CEE = {
+						CreatedOnToolsVersion = 11.2.1;
+						DevelopmentTeam = L5X58D2989;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 54D53606196CC76D005442F9 /* Build configuration list for PBXProject "openh264" */;
@@ -243,6 +327,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 54D53602196CC76D005442F9;
@@ -269,6 +354,7 @@
 			projectRoot = "";
 			targets = (
 				D00B9F931DE97FF700FE6DB2 /* openh264 */,
+				D060DF2323A72CE000E81CEE /* openh264x */,
 			);
 		};
 /* End PBXProject section */
@@ -304,6 +390,16 @@
 		};
 /* End PBXReferenceProxy section */
 
+/* Begin PBXResourcesBuildPhase section */
+		D060DF2223A72CE000E81CEE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D00B9F901DE97FF700FE6DB2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -312,6 +408,16 @@
 				D00B9FBB1DE9828600FE6DB2 /* welsEncoderExt.cpp in Sources */,
 				D00B9FB91DE9818D00FE6DB2 /* welsDecoderExt.cpp in Sources */,
 				D00B9F9B1DE97FF700FE6DB2 /* openh264.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D060DF2023A72CE000E81CEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D060DF3423A72D0400E81CEE /* openh264.cpp in Sources */,
+				D060DF3223A72D0000E81CEE /* welsEncoderExt.cpp in Sources */,
+				D060DF3323A72D0000E81CEE /* welsDecoderExt.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +443,26 @@
 			isa = PBXTargetDependency;
 			name = common;
 			targetProxy = D00B9FA91DE9805900FE6DB2 /* PBXContainerItemProxy */;
+		};
+		D060DF2B23A72CF900E81CEE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = processing;
+			targetProxy = D060DF2A23A72CF900E81CEE /* PBXContainerItemProxy */;
+		};
+		D060DF2D23A72CF900E81CEE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = welsenc;
+			targetProxy = D060DF2C23A72CF900E81CEE /* PBXContainerItemProxy */;
+		};
+		D060DF2F23A72CF900E81CEE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = welsdec;
+			targetProxy = D060DF2E23A72CF900E81CEE /* PBXContainerItemProxy */;
+		};
+		D060DF3123A72CF900E81CEE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = common;
+			targetProxy = D060DF3023A72CF900E81CEE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -481,6 +607,105 @@
 			};
 			name = Release;
 		};
+		D060DF2723A72CE000E81CEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = L5X58D2989;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../api/svc,
+					../../../common/inc,
+					../../../decoder/core/inc,
+					../../../decoder/plus/inc,
+					../../../encoder/core/inc,
+					../../../encoder/plus/inc,
+					../../../processing/interface,
+				);
+				INFOPLIST_FILE = openh264x/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moxtra.openh264x;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		D060DF2823A72CE000E81CEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = L5X58D2989;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../api/svc,
+					../../../common/inc,
+					../../../decoder/core/inc,
+					../../../decoder/plus/inc,
+					../../../encoder/core/inc,
+					../../../encoder/plus/inc,
+					../../../processing/interface,
+				);
+				INFOPLIST_FILE = openh264x/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moxtra.openh264x;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -498,6 +723,15 @@
 			buildConfigurations = (
 				D00B9F9D1DE97FF700FE6DB2 /* Debug */,
 				D00B9F9E1DE97FF700FE6DB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D060DF2923A72CE000E81CEE /* Build configuration list for PBXNativeTarget "openh264x" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D060DF2723A72CE000E81CEE /* Debug */,
+				D060DF2823A72CE000E81CEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
